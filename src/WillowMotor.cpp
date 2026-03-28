@@ -172,6 +172,15 @@ void WillowMotor::Update() {
     return;
   }
 
+  if (encoder_ && encoderConfig_ &&
+      encoderConfig_->GetType() == MotorEncoderType::Quadrature) {
+    const QuadratureEncoderConfig& quadratureConfig =
+        static_cast<const QuadratureEncoderConfig&>(*encoderConfig_);
+    if (quadratureConfig.interruptMode == QuadratureInterruptMode::Manual) {
+      static_cast<Quadrature*>(encoder_)->Poll();
+    }
+  }
+
   const uint32_t now = ReadMicros();
   const uint32_t controlPeriodMicros = GetConfiguredControlPeriodMicros();
   ConsumeInterruptControlUpdates();

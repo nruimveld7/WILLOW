@@ -14,6 +14,7 @@ class Quadrature : public MotorEncoder {
   void Begin() override;
   void OnPhaseAChange() override;
   void OnPhaseBChange() override;
+  void Poll();
 
  private:
   void ApplyTransitionFromPins();

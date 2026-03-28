@@ -49,6 +49,13 @@ void Quadrature::OnPhaseBChange() {
   }
 }
 
+void Quadrature::Poll() {
+  if (!isStarted_) {
+    return;
+  }
+  ApplyTransitionFromPins();
+}
+
 void Quadrature::ApplyTransitionFromPins() {
   const uint8_t nextState = ReadState();
   AddPulseDelta(DecodeTransition(lastState_, nextState));
